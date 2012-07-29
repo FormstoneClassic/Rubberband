@@ -1,7 +1,7 @@
 /*
  * Rubberband - Responsive breakpoint events
  * @author Ben Plum <benjaminplum@gmail.com>
- * @version 1.0.1
+ * @version 1.0.2
  *
  * Copyright © 2012 Ben Plum <ben@benjaminplum.com>
  * Released under the MIT License <http://www.opensource.org/licenses/mit-license.php>
@@ -9,7 +9,7 @@
 
 (function($) {
 	var options = {
-		breakpoints: [ 1220, 960, 720, 480, 320 ],
+		breakpoints: [ 1240, 980, 740, 500, 340 ],
 		debounceTime: 5,
 		addClasses: false
 	};
