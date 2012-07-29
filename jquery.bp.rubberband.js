@@ -19,7 +19,7 @@
 	var methods = {
 		init: function(opts) {
 			options = jQuery.extend(options, opts);
-			console.log(options);
+			
 			options.breakpoints.push(10000);
 			options.breakpoints.sort(methods._sort);
 			
