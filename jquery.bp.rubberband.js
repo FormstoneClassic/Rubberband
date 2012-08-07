@@ -1,9 +1,9 @@
 /*
  * Rubberband - Responsive breakpoint events
- * @author Ben Plum <benjaminplum@gmail.com>
+ * @author Ben Plum
  * @version 1.2
  *
- * Copyright © 2012 Ben Plum <ben@benjaminplum.com>
+ * Copyright © 2012 Ben Plum <mr@benplum.com>
  * Released under the MIT License <http://www.opensource.org/licenses/mit-license.php>
  */
 
