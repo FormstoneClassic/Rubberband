@@ -1,7 +1,7 @@
 /*
  * Rubberband - Responsive breakpoint events
  * @author Ben Plum
- * @version 1.2
+ * @version 1.3
  *
  * Copyright © 2012 Ben Plum <mr@benplum.com>
  * Released under the MIT License <http://www.opensource.org/licenses/mit-license.php>
@@ -75,7 +75,9 @@
 					}
 					
 					// Fire events!
-					$(window).trigger('rubberband.exit', [ lastPoint.max ]);
+					if (typeof lastPoint.max != "undefined") {
+						$(window).trigger('rubberband.exit', [ lastPoint.max ]);
+					}
 					$(window).trigger('rubberband.enter', [ options.breakpoints[point] ]);
 					
 					// Update current breakpoint
