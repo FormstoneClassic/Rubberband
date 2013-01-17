@@ -1,0 +1,34 @@
+{
+	"name": "rubberband",
+	"title": "Rubberband",
+	"description": "A jQuery plugin for adding responsive breakpoint events. ",
+	"keywords": [
+		"responsive",
+		"rwd",
+		"html5"
+	],
+	"version": "1.4.0",
+	"author": {
+		"name": "Ben Plum",
+		"url": "http://www.benplum.com"
+	},
+	"maintainers": [
+		{
+			"name": "Ben Plum",
+			"email": "mr@benplum.com",
+			"url": "http://www.benplum.com"
+		}
+	],
+	"licenses": [
+		{
+			"type": "MIT",
+			"url": "http://www.opensource.org/licenses/mit-license.php"
+		}
+	],
+	"docs": "http://www.benplum.com/projects/rubberband/",
+	"download": "https://github.com/benplum/Rubberband",
+	"bugs": "https://github.com/benplum/Rubberband/issues",
+	"dependencies": {
+		"jquery": ">=1.7"
+	}
+}
