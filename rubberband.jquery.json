@@ -6,9 +6,10 @@
 		"responsive",
 		"rwd",
 		"html5",
-		"utility"
+		"utility",
+		"benplum"
 	],
-	"version": "1.4.0",
+	"version": "1.4.1",
 	"author": {
 		"name": "Ben Plum",
 		"url": "http://www.benplum.com"
