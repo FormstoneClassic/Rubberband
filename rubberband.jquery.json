@@ -21,6 +21,7 @@
 		}
 	],
 	"docs": "http://www.benplum.com/projects/rubberband/",
+	"demo": "http://www.benplum.com/projects/rubberband/",
 	"download": "https://github.com/benplum/Rubberband",
 	"bugs": "https://github.com/benplum/Rubberband/issues",
 	"dependencies": {
