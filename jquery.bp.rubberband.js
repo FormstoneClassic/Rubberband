@@ -1,7 +1,7 @@
 /*
  * Rubberband - Responsive breakpoint events
  * @author Ben Plum
- * @version 1.4.1
+ * @version 1.4.2
  *
  * Copyright © 2012 Ben Plum <mr@benplum.com>
  * Released under the MIT License <http://www.opensource.org/licenses/mit-license.php>
@@ -28,7 +28,7 @@ if (jQuery) (function($) {
 		options = jQuery.extend(options, opts);
 		
 		// Add widest point
-		options.breakpoints.push(10000);
+		options.breakpoints.push(Infinity);
 		options.breakpoints.sort(_sort);
 		
 		// Bind events
@@ -58,27 +58,27 @@ if (jQuery) (function($) {
 			// Add classes to body - psuedo breakpoints for IE
 			if (options.breakpoints[point + 1] && options.addClasses) {
 				if (width <= options.breakpoints[point] && width >= options.breakpoints[point + 1]) {
-					$('body').addClass('bp-min-' + options.breakpoints[point + 1] + "-max-" + options.breakpoints[point]);
+					$("body").addClass("bp-min-" + options.breakpoints[point + 1] + "-max-" + options.breakpoints[point]);
 				} else {
-					$('body').removeClass('bp-min-' + options.breakpoints[point + 1] + "-max-" + options.breakpoints[point]);
+					$("body").removeClass("bp-min-" + options.breakpoints[point + 1] + "-max-" + options.breakpoints[point]);
 				}
 			}
 			
-			// Check if we're in a new breakpoint
+			// Check if we"re in a new breakpoint
 			if (width <= options.breakpoints[point] && (width > options.breakpoints[point + 1] || typeof options.breakpoints[point + 1] === "undefined") && lastPoint.max !== options.breakpoints[point]) {
 				// Add classes to body - psuedo breakpoints for IE
-				if (options.addClasses && (!$('body').hasClass('bp-max-' + options.breakpoints[point]))) {
-					$('body').addClass('bp-max-' + options.breakpoints[point])
-							 .addClass('bp-min-' + options.breakpoints[point + 1])
-							 .removeClass('bp-max-' + lastPoint.max)
-							 .removeClass('bp-min-' + lastPoint.min);
+				if (options.addClasses && (!$("body").hasClass("bp-max-" + options.breakpoints[point]))) {
+					$("body").addClass("bp-max-" + options.breakpoints[point])
+							 .addClass("bp-min-" + options.breakpoints[point + 1])
+							 .removeClass("bp-max-" + lastPoint.max)
+							 .removeClass("bp-min-" + lastPoint.min);
 				}
 				
 				// Fire events!
 				if (typeof lastPoint.max != "undefined") {
-					$(window).trigger('rubberband.exit', [ lastPoint.max ]);
+					$(window).trigger("rubberband.exit", [ lastPoint.max ]);
 				}
-				$(window).trigger('rubberband.enter', [ options.breakpoints[point] ]);
+				$(window).trigger("rubberband.enter", [ options.breakpoints[point] ]);
 				
 				// Update current breakpoint
 				lastPoint.max = options.breakpoints[point];
@@ -104,7 +104,7 @@ if (jQuery) (function($) {
 	$.rubberband = function(method) {
 		if (pub[method]) {
 			return pub[method].apply(this, Array.prototype.slice.call(arguments, 1));
-		} else if (typeof method === 'object' || !method) {
+		} else if (typeof method === "object" || !method) {
 			return _init.apply(this, arguments);
 		}
 		return this;
