@@ -1,7 +1,7 @@
 /*
  * Rubberband - Responsive breakpoint events
  * @author Ben Plum
- * @version 1.4.4
+ * @version 1.5.0
  *
  * Copyright © 2013 Ben Plum <mr@benplum.com>
  * Released under the MIT License <http://www.opensource.org/licenses/mit-license.php>
@@ -11,12 +11,9 @@ if (jQuery) (function($) {
 	
 	// Default options
 	var options = {
-		addClasses: false,
-		breakpoints: {
-			horizontal: [1240, 980, 740, 500, 340],
-			vertical: []
-		},
-		debounce: 5
+		debounce: 5,
+		horizontal: [1240, 980, 740, 500, 340],
+		vertical: []
 	};
 	
 	// Helper vars
@@ -32,12 +29,12 @@ if (jQuery) (function($) {
 		options = jQuery.extend(options, opts);
 		
 		// Add widest point
-		options.breakpoints.horizontal.push(Infinity);
-		options.breakpoints.horizontal.sort(_sort);
+		options.horizontal.push(Infinity);
+		options.horizontal.sort(_sort);
 		
 		// Add tallest point
-		options.breakpoints.vertical.push(Infinity);
-		options.breakpoints.vertical.sort(_sort);
+		options.vertical.push(Infinity);
+		options.vertical.sort(_sort);
 		
 		// Bind events
 		$(window).resize(_respond);
@@ -60,84 +57,52 @@ if (jQuery) (function($) {
 		var width = (window.innerWidth) ? window.innerWidth : document.body.clientWidth - 20,
 			height = (window.innerHeight) ? window.innerHeight : document.body.clientHeight - 20;
 		
-		var dataExit = {},
-			dataEnter = {};
+		var eventEnter = {},
+			eventExit = {};
 		
 		// Loop through breakpoints - Horizontal
-		for (var point in options.breakpoints.horizontal) {
+		for (var point in options.horizontal) {
 			point = parseInt(point, 10);
 			
-			// Add classes to body - psuedo breakpoints for IE
-			if (options.breakpoints.horizontal[point + 1] && options.addClasses) {
-				if (width <= options.breakpoints.horizontal[point] && width >= options.breakpoints.horizontal[point + 1]) {
-					$("body").addClass("bp-min-width-" + options.breakpoints.horizontal[point + 1] + "-max-width-" + options.breakpoints.horizontal[point]);
-				} else {
-					$("body").removeClass("bp-min-width-" + options.breakpoints.horizontal[point + 1] + "-max-width-" + options.breakpoints.horizontal[point]);
-				}
-			}
-			
 			// Check if we"re in a new breakpoint
-			if (width <= options.breakpoints.horizontal[point] && (width > options.breakpoints.horizontal[point + 1] || typeof options.breakpoints.horizontal[point + 1] === "undefined") && lastPointHorizontal.max !== options.breakpoints.horizontal[point]) {
-				// Add classes to body - psuedo breakpoints for IE
-				if (options.addClasses && (!$("body").hasClass("bp-max-width-" + options.breakpoints.horizontal[point]))) {
-					$("body").addClass("bp-max-width-" + options.breakpoints.horizontal[point])
-							 .addClass("bp-min-width-" + options.breakpoints.horizontal[point + 1])
-							 .removeClass("bp-max-width-" + lastPointHorizontal.max)
-							 .removeClass("bp-min-width-" + lastPointHorizontal.min);
-				}
-				
+			if (width <= options.horizontal[point] && (width > options.horizontal[point + 1] || 
+				typeof options.horizontal[point + 1] === "undefined") && lastPointHorizontal.max !== options.horizontal[point]) {
 				// Fire events!
 				if (typeof lastPointHorizontal.max != "undefined") {
-					dataExit.horizontal = lastPointHorizontal.max;
+					eventExit.horizontal = lastPointHorizontal.max;
 				}
-				dataEnter.horizontal = options.breakpoints.horizontal[point];
+				eventEnter.horizontal = options.horizontal[point];
 				
 				// Update current breakpoint
-				lastPointHorizontal.max = options.breakpoints.horizontal[point];
-				lastPointHorizontal.min = options.breakpoints.horizontal[point + 1];
+				lastPointHorizontal.max = options.horizontal[point];
+				lastPointHorizontal.min = options.horizontal[point + 1];
 			}
 		}
 		
 		// Loop through breakpoints - Vertical
-		for (var point in options.breakpoints.vertical) {
+		for (var point in options.vertical) {
 			point = parseInt(point, 10);
 			
-			// Add classes to body - psuedo breakpoints for IE
-			if (options.breakpoints.vertical[point + 1] && options.addClasses) {
-				if (height <= options.breakpoints.vertical[point] && height >= options.breakpoints.vertical[point + 1]) {
-					$("body").addClass("bp-min-height-" + options.breakpoints.vertical[point + 1] + "-max-height-" + options.breakpoints.vertical[point]);
-				} else {
-					$("body").removeClass("bp-min-height-" + options.breakpoints.vertical[point + 1] + "-max-height-" + options.breakpoints.vertical[point]);
-				}
-			}
-			
 			// Check if we"re in a new breakpoint
-			if (height <= options.breakpoints.vertical[point] && (height > options.breakpoints.vertical[point + 1] || typeof options.breakpoints.vertical[point + 1] === "undefined") && lastPointVertical.max !== options.breakpoints.vertical[point]) {
-				// Add classes to body - psuedo breakpoints for IE
-				if (options.addClasses && (!$("body").hasClass("bp-max-height-" + options.breakpoints.vertical[point]))) {
-					$("body").addClass("bp-max-height-" + options.breakpoints.vertical[point])
-							 .addClass("bp-min-height-" + options.breakpoints.vertical[point + 1])
-							 .removeClass("bp-max-height-" + lastPointVertical.max)
-							 .removeClass("bp-min-height-" + lastPointVertical.min);
-				}
-				
+			if (height <= options.vertical[point] && (height > options.vertical[point + 1] || 
+				typeof options.vertical[point + 1] === "undefined") && lastPointVertical.max !== options.vertical[point]) {
 				// Fire events!
 				if (typeof lastPointVertical.max != "undefined") {
-					dataExit.vertical = lastPointVertical.max;
+					eventExit.vertical = lastPointVertical.max;
 				}
-				dataEnter.vertical = options.breakpoints.vertical[point];
+				eventEnter.vertical = options.vertical[point];
 				
 				// Update current breakpoint
-				lastPointVertical.max = options.breakpoints.vertical[point];
-				lastPointVertical.min = options.breakpoints.vertical[point + 1];
+				lastPointVertical.max = options.vertical[point];
+				lastPointVertical.min = options.vertical[point + 1];
 			}
 		}
 		
-		if (dataEnter.vertical || dataEnter.horizontal) {
-			$(window).trigger("rubberband.enter", [ dataEnter ]);
+		if (eventEnter.vertical || eventEnter.horizontal) {
+			$(window).trigger("rubberband.enter", [ eventEnter ]);
 		}
-		if (dataExit.vertical || dataExit.horizontal) {
-			$(window).trigger("rubberband.exit", [ dataExit ]);
+		if (eventExit.vertical || eventExit.horizontal) {
+			$(window).trigger("rubberband.exit", [ eventExit ]);
 		}
 	}
 	
