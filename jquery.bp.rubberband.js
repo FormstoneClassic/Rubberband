@@ -1,7 +1,7 @@
 /*
  * Rubberband - Responsive breakpoint events
  * @author Ben Plum
- * @version 1.5.0
+ * @version 2.0.0a
  *
  * Copyright © 2013 Ben Plum <mr@benplum.com>
  * Released under the MIT License <http://www.opensource.org/licenses/mit-license.php>
@@ -12,13 +12,21 @@ if (jQuery) (function($) {
 	// Default options
 	var options = {
 		debounce: 5,
-		horizontal: [1240, 980, 740, 500, 340],
-		vertical: []
+		minWidth: [0],
+		maxWidth: [Infinity],
+		minHeight: [0],
+		maxHeight: [Infinity],
+		unit: "px"
 	};
 	
 	// Helper vars
-	var lastPointVertical = {},
-		lastPointHorizontal = {},
+	var mqMatches = {},
+		mqStrings = {
+			minWidth: "min-width",
+			maxWidth: "max-width",
+			minHeight: "min-height",
+			maxHeight: "max-width"
+		},
 		timeout = null;
 	
 	// Public Methods
@@ -26,89 +34,55 @@ if (jQuery) (function($) {
 		
 	// Initialize
 	function _init(opts) {
-		options = jQuery.extend(options, opts);
+		// Extend!
+		options = $.extend(true, options, opts);
 		
-		// Add widest point
-		options.horizontal.push(Infinity);
-		options.horizontal.sort(_sort);
+		options.minWidth.sort(_sortD);
+		options.maxWidth.sort(_sortA);
+		options.minHeight.sort(_sortD);
+		options.maxHeight.sort(_sortA);
 		
-		// Add tallest point
-		options.vertical.push(Infinity);
-		options.vertical.sort(_sort);
+		// Bind events to specific media query events
+		for (var i in mqStrings) {
+			mqMatches[i] = {};
+			for (var j in options[i]) {
+				var _mq = window.matchMedia( "(" + mqStrings[i] + ": " + (options[i][j] === Infinity ? 100000 : options[i][j]) + options.unit + ")" );
+				_mq.addListener(_respond);
+				mqMatches[i][ options[i][j] ] = _mq;
+			}
+		}
 		
-		// Bind events
-		$(window).resize(_respond);
+		// Fire initial event
 		_respond();
 	}
 	
-	// Debounce resize
-	function _respond(e) {
+	function _respond() {
 		_clearTimeout();
-		timeout = setTimeout(function() {
-			_doRespond();
-		}, options.debounce);
+		setTimeout(function() { 
+			_doRespond() 
+		}, options.debouce);
 	}
 	
-	// Handle resize
 	function _doRespond() {
-		_clearTimeout();
+		var currentState = {};
 		
-		// Normalize window width & height
-		var width = (window.innerWidth) ? window.innerWidth : document.body.clientWidth - 20,
-			height = (window.innerHeight) ? window.innerHeight : document.body.clientHeight - 20;
-		
-		var eventEnter = {},
-			eventExit = {};
-		
-		// Loop through breakpoints - Horizontal
-		for (var point in options.horizontal) {
-			point = parseInt(point, 10);
-			
-			// Check if we"re in a new breakpoint
-			if (width <= options.horizontal[point] && (width > options.horizontal[point + 1] || 
-				typeof options.horizontal[point + 1] === "undefined") && lastPointHorizontal.max !== options.horizontal[point]) {
-				// Fire events!
-				if (typeof lastPointHorizontal.max != "undefined") {
-					eventExit.horizontal = lastPointHorizontal.max;
+		for (var i in mqMatches) {
+			for (var j in mqMatches[i]) {
+				if (mqMatches[i][j].matches) {
+					currentState[i] = (j === "Infinity" ? Infinity : parseInt(j, 10));
 				}
-				eventEnter.horizontal = options.horizontal[point];
-				
-				// Update current breakpoint
-				lastPointHorizontal.max = options.horizontal[point];
-				lastPointHorizontal.min = options.horizontal[point + 1];
 			}
 		}
 		
-		// Loop through breakpoints - Vertical
-		for (var point in options.vertical) {
-			point = parseInt(point, 10);
-			
-			// Check if we"re in a new breakpoint
-			if (height <= options.vertical[point] && (height > options.vertical[point + 1] || 
-				typeof options.vertical[point + 1] === "undefined") && lastPointVertical.max !== options.vertical[point]) {
-				// Fire events!
-				if (typeof lastPointVertical.max != "undefined") {
-					eventExit.vertical = lastPointVertical.max;
-				}
-				eventEnter.vertical = options.vertical[point];
-				
-				// Update current breakpoint
-				lastPointVertical.max = options.vertical[point];
-				lastPointVertical.min = options.vertical[point + 1];
-			}
-		}
-		
-		if (eventEnter.vertical || eventEnter.horizontal) {
-			$(window).trigger("rubberband.enter", [ eventEnter ]);
-		}
-		if (eventExit.vertical || eventExit.horizontal) {
-			$(window).trigger("rubberband.exit", [ eventExit ]);
-		}
+		$(window).trigger("snap", [ currentState ]);
 	}
-	
+		
 	// Sort array
-	function _sort(a, b) { 
+	function _sortA(a, b) { 
 		return (b - a); 
+	}
+	function _sortD(a, b) { 
+		return (a - b); 
 	}
 	
 	// Clear debouncer
