@@ -1,7 +1,7 @@
 /*
  * Rubberband - Responsive breakpoint events
  * @author Ben Plum
- * @version 2.0.0a
+ * @version 2.0.1
  *
  * Copyright © 2013 Ben Plum <mr@benplum.com>
  * Released under the MIT License <http://www.opensource.org/licenses/mit-license.php>
@@ -10,14 +10,15 @@
 if (jQuery) (function($) {
 	
 	// Default options
-	var options = {
-		debounce: 5,
-		minWidth: [0],
-		maxWidth: [Infinity],
-		minHeight: [0],
-		maxHeight: [Infinity],
-		unit: "px"
-	};
+	var supported = (window.matchMedia !== undefined);
+		options = {
+			debounce: 5,
+			minWidth: [0],
+			maxWidth: [Infinity],
+			minHeight: [0],
+			maxHeight: [Infinity],
+			unit: "px"
+		};
 	
 	// Helper vars
 	var mqMatches = {},
@@ -95,10 +96,13 @@ if (jQuery) (function($) {
 	
 	// Define plugin 
 	$.rubberband = function(method) {
-		if (pub[method]) {
-			return pub[method].apply(this, Array.prototype.slice.call(arguments, 1));
-		} else if (typeof method === "object" || !method) {
-			return _init.apply(this, arguments);
+		// Check for matchMedia() support
+		if (supported) {
+			if (pub[method]) {
+				return pub[method].apply(this, Array.prototype.slice.call(arguments, 1));
+			} else if (typeof method === "object" || !method) {
+				return _init.apply(this, arguments);
+			}
 		}
 		return this;
 	};
