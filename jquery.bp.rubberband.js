@@ -1,7 +1,7 @@
 /*
  * Rubberband - Responsive breakpoint events
  * @author Ben Plum
- * @version 2.0.2
+ * @version 2.0.3
  *
  * Copyright © 2013 Ben Plum <mr@benplum.com>
  * Released under the MIT License <http://www.opensource.org/licenses/mit-license.php>
@@ -73,7 +73,16 @@ if (jQuery) (function($) {
 		for (var i in mqStrings) {
 			for (var j in mqMatches[i]) {
 				if (mqMatches[i][j].matches) {
-					currentState[i] = (j === "Infinity" ? Infinity : parseInt(j, 10));
+					var state = (j == "Infinity" ? Infinity : parseInt(j, 10));
+					if (i.indexOf("max") > -1) {
+						if (!currentState[i] || state < currentState[i]) {
+							currentState[i] = state;
+						}
+					} else { 
+						if (!currentState[i] || state > currentState[i]) {
+							currentState[i] = state;
+						}
+					}
 				}
 			}
 		}
