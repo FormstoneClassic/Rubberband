@@ -1,7 +1,7 @@
 /*
  * Rubberband - Responsive breakpoint events
  * @author Ben Plum
- * @version 2.0.1
+ * @version 2.0.2
  *
  * Copyright © 2013 Ben Plum <mr@benplum.com>
  * Released under the MIT License <http://www.opensource.org/licenses/mit-license.php>
@@ -26,7 +26,7 @@ if (jQuery) (function($) {
 			minWidth: "min-width",
 			maxWidth: "max-width",
 			minHeight: "min-height",
-			maxHeight: "max-width"
+			maxHeight: "max-height"
 		},
 		timeout = null;
 	
@@ -36,7 +36,10 @@ if (jQuery) (function($) {
 	// Initialize
 	function _init(opts) {
 		// Extend!
-		options = $.extend(true, options, opts);
+		for (var i in mqStrings) {
+			options[i] = $.merge(opts[i], options[i]);
+		}
+		options = $.extend(options, opts);
 		
 		options.minWidth.sort(_sortD);
 		options.maxWidth.sort(_sortA);
@@ -47,7 +50,7 @@ if (jQuery) (function($) {
 		for (var i in mqStrings) {
 			mqMatches[i] = {};
 			for (var j in options[i]) {
-				var _mq = window.matchMedia( "(" + mqStrings[i] + ": " + (options[i][j] === Infinity ? 100000 : options[i][j]) + options.unit + ")" );
+				var _mq = window.matchMedia( "(" + mqStrings[i] + ": " + (options[i][j] == Infinity ? 100000 : options[i][j]) + options.unit + ")" );
 				_mq.addListener(_respond);
 				mqMatches[i][ options[i][j] ] = _mq;
 			}
@@ -67,7 +70,7 @@ if (jQuery) (function($) {
 	function _doRespond() {
 		var currentState = {};
 		
-		for (var i in mqMatches) {
+		for (var i in mqStrings) {
 			for (var j in mqMatches[i]) {
 				if (mqMatches[i][j].matches) {
 					currentState[i] = (j === "Infinity" ? Infinity : parseInt(j, 10));
