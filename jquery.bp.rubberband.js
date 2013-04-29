@@ -1,7 +1,7 @@
 /*
  * Rubberband - Responsive breakpoint events
  * @author Ben Plum
- * @version 2.0.3
+ * @version 2.0.4
  *
  * Copyright © 2013 Ben Plum <mr@benplum.com>
  * Released under the MIT License <http://www.opensource.org/licenses/mit-license.php>
@@ -37,7 +37,7 @@ if (jQuery) (function($) {
 	function _init(opts) {
 		// Extend!
 		for (var i in mqStrings) {
-			options[i] = $.merge(opts[i], options[i]);
+			options[i] = (opts[i]) ? $.merge(opts[i], options[i]) : options[i];
 		}
 		options = $.extend(options, opts);
 		
