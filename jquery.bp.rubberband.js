@@ -35,6 +35,7 @@ if (jQuery) (function($) {
 		
 	// Initialize
 	function _init(opts) {
+		opts = opts || {};
 		// Extend!
 		for (var i in mqStrings) {
 			options[i] = (opts[i]) ? $.merge(opts[i], options[i]) : options[i];
