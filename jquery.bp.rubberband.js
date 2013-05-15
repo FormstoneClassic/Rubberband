@@ -1,7 +1,7 @@
 /*
  * Rubberband - Responsive breakpoint events
  * @author Ben Plum
- * @version 2.0.4
+ * @version 2.0.5
  *
  * Copyright © 2013 Ben Plum <mr@benplum.com>
  * Released under the MIT License <http://www.opensource.org/licenses/mit-license.php>
@@ -63,7 +63,7 @@ if (jQuery) (function($) {
 	
 	function _respond() {
 		_clearTimeout();
-		setTimeout(function() { 
+		timeout = setTimeout(function() { 
 			_doRespond() 
 		}, options.debouce);
 	}
