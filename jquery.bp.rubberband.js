@@ -31,13 +31,10 @@ if (jQuery) (function($) {
         timeout = null;
 
     var currentState = undefined;
-    var promise = new $.Deferred();
 
     // Public Methods
     var pub = {
-        loaded : function() {
-            return promise;
-        },
+        loaded : new $.Deferred(),
         state : function () {
             return currentState;
         }
@@ -81,7 +78,7 @@ if (jQuery) (function($) {
     function _doRespond() {
         _setState();
         $(window).trigger("snap", [ currentState ]);
-        promise.resolve();
+        pub.loaded.resolve();
     }
 
 
@@ -128,7 +125,11 @@ if (jQuery) (function($) {
         if (supported) {
             console.log(method);
             if (pub[method]) {
-                return pub[method].apply(this, Array.prototype.slice.call(arguments, 1));
+                if ( method == "loaded" ) {
+                    return pub[method];
+                } else {
+                    return pub[method].apply(this, Array.prototype.slice.call(arguments, 1));
+                }
             } else if (typeof method === "object" || !method) {
                 return _init.apply(this, arguments);
             }
