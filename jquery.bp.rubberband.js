@@ -1,7 +1,7 @@
 /*
  * Rubberband - Responsive breakpoint events
  * @author Ben Plum
- * @version 2.0.8
+ * @version 2.0.9
  *
  * Copyright © 2013 Ben Plum <mr@benplum.com>
  * Released under the MIT License <http://www.opensource.org/licenses/mit-license.php>
@@ -10,7 +10,7 @@
 if (jQuery) (function($) {
 
 	// Default options
-	var supported = (window.matchMedia !== undefined);
+	var supported = (window.matchMedia !== undefined),
 		options = {
 			debounce: 5,
 			minWidth: [0],
