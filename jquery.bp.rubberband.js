@@ -74,7 +74,7 @@ if (jQuery) (function($) {
 		_clearTimeout();
 		timeout = setTimeout(function() {
 			_doRespond()
-		}, options.debouce);
+		}, options.debounce);
 	}
 
 	function _doRespond() {
