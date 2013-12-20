@@ -19,7 +19,7 @@ if (jQuery) (function($) {
 			maxHeight: [Infinity],
 			unit: "px"
 		};
-	
+
 	// Helper vars
 	var mqMatches = {},
 		mqStrings = {
@@ -31,7 +31,7 @@ if (jQuery) (function($) {
 		timeout = null,
 		currentState = undefined,
 		deferred = new $.Deferred();
-	
+
 	// Public Methods
 	var pub = {
 		ready: function() {
@@ -41,7 +41,7 @@ if (jQuery) (function($) {
 			return currentState;
 		}
 	};
-	
+
 	// Initialize
 	function _init(opts) {
 		opts = opts || {};
@@ -69,20 +69,20 @@ if (jQuery) (function($) {
 		// Fire initial event
 		_respond();
 	}
-	
+
 	function _respond() {
 		_clearTimeout();
 		timeout = setTimeout(function() {
 			_doRespond()
 		}, options.debouce);
 	}
-	
+
 	function _doRespond() {
 		_setState();
 		$(window).trigger("snap", [ currentState ]);
 		deferred.resolve();
 	}
-	
+
 	function _setState() {
 		currentState = {};
 		for (var i in mqStrings) {
@@ -103,7 +103,7 @@ if (jQuery) (function($) {
 		}
 		return currentState;
 	}
-	
+
 	// Sort arrays
 	function _sortA(a, b) {
 		return (b - a);
@@ -111,7 +111,7 @@ if (jQuery) (function($) {
 	function _sortD(a, b) {
 		return (a - b);
 	}
-	
+
 	// Clear debouncer
 	function _clearTimeout() {
 		if (timeout != null) {
@@ -119,7 +119,7 @@ if (jQuery) (function($) {
 			timeout = null;
 		}
 	}
-	
+
 	// Define plugin
 	$.rubberband = function(method) {
 		// Check for matchMedia() support
