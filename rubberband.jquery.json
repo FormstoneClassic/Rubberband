@@ -1,30 +1,34 @@
 {
-	"name": "rubberband",
-	"title": "Rubberband",
-	"description": "A jQuery plugin for adding responsive breakpoint events. ",
-	"keywords": [
-		"responsive",
-		"rwd",
-		"html5",
-		"utility",
-		"benplum"
-	],
-	"version": "2.0.9",
-	"author": {
-		"name": "Ben Plum",
-		"url": "http://www.benplum.com"
-	},
-	"licenses": [
-		{
-			"type": "MIT",
-			"url": "http://www.opensource.org/licenses/mit-license.php"
-		}
-	],
-	"docs": "http://www.benplum.com/projects/rubberband/",
-	"demo": "http://www.benplum.com/projects/rubberband/",
-	"download": "https://github.com/benplum/Rubberband",
-	"bugs": "https://github.com/benplum/Rubberband/issues",
-	"dependencies": {
-		"jquery": ">=1.7"
-	}
+  "name": "rubberband",
+  "version": "3.0.0",
+  "title": "Rubberband",
+  "author": {
+    "name": "Ben Plum",
+    "email": "mr@benplum.com",
+    "url": "http://www.benplum.com"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
+    }
+  ],
+  "dependencies": {
+    "jquery": ">=1.7"
+  },
+  "description": "A jQuery plugin for responsive media query events. Part of the Formstone Library.",
+  "keywords": [
+    "responsive",
+    "html5",
+    "utility",
+    "javascript",
+    "jquery",
+    "formstone",
+    "benplum"
+  ],
+  "docs": "http://formstone.it/rubberband/",
+  "demo": "http://formstone.it/rubberband/",
+  "download": "https://github.com/benplum/Rubberband",
+  "bugs": "https://github.com/benplum/Rubberband/issues",
+  "homepage": "http://formstone.it/rubberband/"
 }
