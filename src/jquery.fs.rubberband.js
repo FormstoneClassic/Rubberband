@@ -14,11 +14,11 @@
 	
 	/**
 	 * @options
-	 * @param minWidth [array] <[0]> "Array of min-widths"
-	 * @param maxWidth [array] <[Infinity]> "Array of max-widths"
-	 * @param minHeight [array] <[0]> "Array of min-heights"
-	 * @param maxHeight [array] <[Infinity]> "Array of max-heights"
-	 * @param unit [string] <"px"> "Unit to use when matching widths and heights"
+	 * @param minWidth [array] <[ 0 ]> "Array of min-widths"
+	 * @param maxWidth [array] <[ Infinity ]> "Array of max-widths"
+	 * @param minHeight [array] <[ 0 ]> "Array of min-heights"
+	 * @param maxHeight [array] <[ Infinity ]> "Array of max-heights"
+	 * @param unit [string] <'px'> "Unit to use when matching widths and heights"
 	 */
 	var options = {
 			//mediaQueries: [],  * @param mediaQueries [array] <[]> "Array of custom media queries to match against"
@@ -54,8 +54,8 @@
 		 * @method 
 		 * @name state
 		 * @description Returns the current state
-		 * @return "Current state object"
-		 * @example var state = $.rubberbane("state");
+		 * @return [object] "Current state object"
+		 * @example var state = $.rubberband("state");
 		 */
 		state: function () {
 			return currentState;
