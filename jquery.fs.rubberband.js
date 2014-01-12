@@ -1,16 +1,9 @@
 /* 
- * Rubberband v3.0.0 - 2014-01-06 
+ * Rubberband v3.0.1 - 2014-01-12 
  * A jQuery plugin for responsive media query events. Part of the Formstone Library. 
  * http://formstone.it/rubberband/ 
  * 
  * Copyright 2014 Ben Plum; MIT Licensed 
- */ 
-
-/** 
- * @plugin 
- * @name Rubberband 
- * @description A jQuery plugin for responsive media query events. Part of the Formstone Library. 
- * @version 3.0.0 
  */ 
 
 ;(function ($, window) {
@@ -29,11 +22,11 @@
 	
 	/**
 	 * @options
-	 * @param minWidth [array] <[0]> "Array of min-widths"
-	 * @param maxWidth [array] <[Infinity]> "Array of max-widths"
-	 * @param minHeight [array] <[0]> "Array of min-heights"
-	 * @param maxHeight [array] <[Infinity]> "Array of max-heights"
-	 * @param unit [string] <"px"> "Unit to use when matching widths and heights"
+	 * @param minWidth [array] <[ 0 ]> "Array of min-widths"
+	 * @param maxWidth [array] <[ Infinity ]> "Array of max-widths"
+	 * @param minHeight [array] <[ 0 ]> "Array of min-heights"
+	 * @param maxHeight [array] <[ Infinity ]> "Array of max-heights"
+	 * @param unit [string] <'px'> "Unit to use when matching widths and heights"
 	 */
 	var options = {
 			//mediaQueries: [],  * @param mediaQueries [array] <[]> "Array of custom media queries to match against"
@@ -69,8 +62,8 @@
 		 * @method 
 		 * @name state
 		 * @description Returns the current state
-		 * @return "Current state object"
-		 * @example var state = $.rubberbane("state");
+		 * @return [object] "Current state object"
+		 * @example var state = $.rubberband("state");
 		 */
 		state: function () {
 			return currentState;
