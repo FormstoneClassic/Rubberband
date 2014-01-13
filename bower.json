@@ -13,7 +13,8 @@
     "jquery.fs.rubberband.js"
   ],
   "ignore": [
-    "*.json",
-    "Gruntfile.js"
+    "*.jquery.json",
+    "Gruntfile.js",
+    "src/"
   ]
 }
