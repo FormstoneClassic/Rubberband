@@ -3,19 +3,19 @@
 	<head>
 		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
 		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-		
+
 		<title>Rubberband Demo</title>
-		
+
 		<link href="http://formstone.it/css/demo.css" rel="stylesheet" type="text/css" media="all" />
-		
+
 		<!--[if LTE IE 8]>
 			<link href="http://formstone.it/css/demo.ie.css" rel="stylesheet" type="text/css" media="all" />
 		<![endif]-->
-		
+
 		<!-- Don't want to load a different version that's packaged with the normal demo files -->
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 		<!-- <script src="http://formstone.it/js/demo.js"></script> -->
-		
+
 		<!--[if LTE IE 9]>
 			<script src="ie/html5.js"></script>
 		<![endif]-->
@@ -25,16 +25,16 @@
 		<!--[if LTE IE 8]>
 			<script src="ie/matchMedia.ie8.js"></script>
 		<![endif]-->
-		
-		<script src="../src/jquery.fs.rubberband.js"></script>
-		
+
+		<script src="../jquery.fs.rubberband.js"></script>
+
 		<style>
 			#rubberband_demo { background: #fff; border: 1px solid #ccc; border-radius: 3px; height: 200px; overflow-y: scroll; overflow-x: hidden; margin: 20px 0 0; padding: 0 20px; }
 			#rubberband_demo strong { font-weight: 600; }
 			#rubberband_demo span { display: inline-block; width: 90px; }
 			#rubberband_demo p:first-child { font-weight: 600; }
 		</style>
-		
+
 		<script>
 			$(document).ready(function() {
 				$(window).on("snap", function(e, data) {
@@ -45,7 +45,7 @@
 					html += "<span></span><span>MaxHeight:</span>"+ data.maxHeight + "</p>";
 					$("#rubberband_demo").prepend(html);
 				});
-				
+
 				$.rubberband({
 					minWidth: [ 320, 500, 740, 980, 1220 ],
 					maxWidth: [ 1220, 980, 740, 500, 320 ],
@@ -71,30 +71,30 @@
 					<br />
 					<a href="http://formstone.it/rubberband/" class="button">View Documentation</a>
 				</header>
-				
+
 				<!-- Basic -->
 				<h3>Basic</h3>
 				<p>Rubberband must first be configured by passing arrays containing the width and heights you'd like to target:</p>
-				
+
 				<pre class="example"><code class="language-javascript">$.rubberband({
 	minWidth: [ 320, 500, 740, 980, 1220 ],
 	maxWidth: [ 1220, 980, 740, 500, 320 ],
 	minHeight: [ 400, 800 ],
 	maxHeight: [ 800, 400 ]
 });</code></pre>
-				
+
 				<p>After initializing, simply listen for the "snap" event:
-				
+
 				<pre class="example"><code class="language-javascript">$(window).on("snap", function(e, data) {
 	console.log(data.minWidth, data.maxWidth, data.minHeight, data.maxHeight);
 });</code></pre>
-				
+
 				<h5>Demo</h5>
 				<div id="rubberband_demo"></div>
-				
+
 			</div>
 		</article>
-		
+
 		<footer id="footer" class="row">
 			<div class="all-full copyright">
 				Made with &hearts; in Hampden
