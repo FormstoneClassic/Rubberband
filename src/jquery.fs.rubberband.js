@@ -1,6 +1,6 @@
 ;(function ($, window) {
 	"use strict";
-	
+
 	var nativeSupport = (window.matchMedia !== undefined),
 		currentState = null,
 		mqMatches = {},
@@ -9,9 +9,10 @@
 			maxWidth: "max-width",
 			minHeight: "min-height",
 			maxHeight: "max-height"
-		};
+		},
+		bindings = [];
 		//deferred = new $.Deferred();
-	
+
 	/**
 	 * @options
 	 * @param minWidth [array] <[ 0 ]> "Array of min-widths"
@@ -28,12 +29,59 @@
 			maxHeight: [Infinity],
 			unit: "px"
 		};
-	
-	
+
+
 	var pub = {
-		
+
 		/**
-		 * @method 
+		 * @method
+		 * @name bind
+		 * @description Binds callbacks to media query matching
+		 * @param media [string] "Media query to match"
+		 * @param data [object] "Object containing 'enter' and 'leave' callbacks"
+		 * @example $.rubberband("bind", "(min-width: 500px)", { ... });
+		 */
+		bind: function(media, data) {
+			if (!bindings[media]) {
+				bindings[media] = {
+					mq: window.matchMedia(media),
+					active: false,
+					enter: [],
+					leave: []
+				};
+
+				bindings[media].mq.addListener(_onBindingRespond);
+			}
+
+			for (var i in data) {
+				if (data.hasOwnProperty(i) && bindings[media].hasOwnProperty(i)) {
+					bindings[media][i].push(data[i]);
+				}
+			}
+
+			_onBindingRespond(bindings[media].mq);
+
+			return this;
+		},
+
+		/**
+		 * @method
+		 * @name unbind
+		 * @description Unbinds all callbacks from media query
+		 * @param media [string] "Media query to match"
+		 * @example $.rubberband("unbind", "(min-width: 500px)", { ... });
+		 */
+		unbind: function(media) {
+			if (bindings[media]) {
+				bindings[media].mq.removeListener(_onBindingRespond);
+				bindings = bindings.splice(bindings.indexOf(bindings[media]), 1);
+			}
+
+			return this;
+		},
+
+		/**
+		 * @method
 		 * @name defaults
 		 * @description Sets default plugin options
 		 * @param opts [object] <{}> "Options object"
@@ -41,17 +89,16 @@
 		 */
 		defaults: function(opts) {
 			options = $.extend(options, opts || {});
-			return $(this);
 		},
-		
+
 		/*
 		ready: function() {
 			return deferred.promise();
 		},
 		*/
-		
+
 		/**
-		 * @method 
+		 * @method
 		 * @name state
 		 * @description Returns the current state
 		 * @return [object] "Current state object"
@@ -61,7 +108,7 @@
 			return currentState;
 		}
 	};
-	
+
 	/**
 	 * @method private
 	 * @name _init
@@ -70,20 +117,20 @@
 	 */
 	function _init(opts) {
 		opts = opts || {};
-		
+
 		for (var i in mqStrings) {
 			if (mqStrings.hasOwnProperty(i)) {
 				options[i] = (opts[i]) ? $.merge(opts[i], options[i]) : options[i];
 			}
 		}
 		options = $.extend(options, opts);
-		
+
 		// Do some sorting
 		options.minWidth.sort(_sortDesc);
 		options.maxWidth.sort(_sortAsc);
 		options.minHeight.sort(_sortDesc);
 		options.maxHeight.sort(_sortAsc);
-		
+
 		// Bind events to specific media query events
 		for (var j in mqStrings) {
 			if (mqStrings.hasOwnProperty(j)) {
@@ -97,29 +144,32 @@
 				}
 			}
 		}
-		
+
 		// Fire initial event
 		_onRespond();
 	}
-	
+
 	/**
 	 * @method private
 	 * @name _onRespond
 	 * @description Handles media query changes
-	 */ 
+	 */
 	function _onRespond() {
 		_setState();
 		$(window).trigger("snap", [ currentState ]);
 		//deferred.resolve();
 	}
-	
+
 	/**
 	 * @method private
 	 * @name _setState
 	 * @description Sets current media query match state
-	 */ 
+	 */
 	function _setState() {
-		currentState = {};
+		currentState = {
+			unit: options.unit
+		};
+
 		for (var i in mqStrings) {
 			if (mqStrings.hasOwnProperty(i)) {
 				for (var j in mqMatches[i]) {
@@ -141,7 +191,27 @@
 			}
 		}
 	}
-	
+
+	/**
+	 * @method private
+	 * @name _onBindingRespond
+	 * @description Handles a binding's media query change
+	 */
+	function _onBindingRespond(mq) {
+		var binding = bindings[mq.media],
+			event = mq.matches ? "enter" : "leave";
+
+		if (binding.active || (!binding.active && mq.matches)) {
+			for (var i in binding[event]) {
+				if (binding[event].hasOwnProperty(i)) {
+					binding[event][i].apply(binding.mq);
+				}
+			}
+
+			binding.active = true;
+		}
+	}
+
 	/**
 	 * @method private
 	 * @name _sortAsc
@@ -149,11 +219,11 @@
 	 * @param a [mixed] "First value"
 	 * @param b [mixed] "Second value"
 	 * @return Difference between second and first values
-	 */ 
+	 */
 	function _sortAsc(a, b) {
 		return (b - a);
 	}
-	
+
 	/**
 	 * @method private
 	 * @name _sortDesc
@@ -161,11 +231,11 @@
 	 * @param a [mixed] "First value"
 	 * @param b [mixed] "Second value"
 	 * @return Difference between first and second values
-	 */ 
+	 */
 	function _sortDesc(a, b) {
 		return (a - b);
 	}
-	
+
 	$.rubberband = function(method) {
 		if (nativeSupport) {
 			if (pub[method]) {

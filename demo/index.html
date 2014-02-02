@@ -26,25 +26,17 @@
 			<script src="ie/matchMedia.ie8.js"></script>
 		<![endif]-->
 
-		<script src="../jquery.fs.rubberband.js"></script>
+		<script src="../src/jquery.fs.rubberband.js"></script>
 
 		<style>
-			#rubberband_demo { background: #fff; border: 1px solid #ccc; border-radius: 3px; height: 200px; overflow-y: scroll; overflow-x: hidden; margin: 20px 0 0; padding: 0 20px; }
-			#rubberband_demo strong { font-weight: 600; }
-			#rubberband_demo span { display: inline-block; width: 90px; }
-			#rubberband_demo p:first-child { font-weight: 600; }
+			.output { vertical-align: top; }
+			.output span { display: inline-block; width: 90px; }
+			.output p:first-child { font-weight: 600; }
 		</style>
 
 		<script>
 			$(document).ready(function() {
-				$(window).on("snap", function(e, data) {
-					var html = "";
-					html += "<p><span>Snap:</span><span>MinWidth:</span>" + data.minWidth +"<br />";
-					html += "<span></span><span>MaxWidth:</span>"+ data.maxWidth +"<br />";
-					html += "<span></span><span>MinHeight:</span>"+ data.minHeight +"<br />";
-					html += "<span></span><span>MaxHeight:</span>"+ data.maxHeight + "</p>";
-					$("#rubberband_demo").prepend(html);
-				});
+				$(window).on("snap", logSnap);
 
 				$.rubberband({
 					minWidth: [ 320, 500, 740, 980, 1220 ],
@@ -52,6 +44,30 @@
 					minHeight: [ 400, 800 ],
 					maxHeight: [ 800, 400 ]
 				});
+
+				$.rubberband("bind", "(min-width: 740px)", {
+					enter: logChange,
+					leave: logChange
+				});
+
+				function logSnap(e, data) {
+					var html = "";
+
+					html += "<p><span>Snap:</span><span>MinWidth:</span>" + data.minWidth + "<br />";
+					html += "<span></span><span>MaxWidth:</span>"+ data.maxWidth + "<br />";
+					html += "<span></span><span>MinHeight:</span>"+ data.minHeight + "<br />";
+					html += "<span></span><span>MaxHeight:</span>"+ data.maxHeight + "</p>";
+
+					$("#rubberband_demo").prepend(html);
+				}
+
+				function logChange() {
+					var mql = this,
+						type = mql.matches ? "Enter" : "Leave"
+						html = "<p><span>" + type + ":</span>" + mql.media + "<br />";
+
+					$("#rubberband_demo_binding").prepend(html);
+				}
 			});
 		</script>
 	</head>
@@ -74,7 +90,7 @@
 
 				<!-- Basic -->
 				<h3>Basic</h3>
-				<p>Rubberband must first be configured by passing arrays containing the width and heights you'd like to target:</p>
+				<p>Rubberband can track global changes to screen size based on your existing grid system. This is useful when many elements need to be resized on all changes to screen size. Start by configuring the dimensions you'd like to track by passing arrays containing the target width and/or heights:</p>
 
 				<pre class="example"><code class="language-javascript">$.rubberband({
 	minWidth: [ 320, 500, 740, 980, 1220 ],
@@ -90,7 +106,32 @@
 });</code></pre>
 
 				<h5>Demo</h5>
-				<div id="rubberband_demo"></div>
+				<div id="rubberband_demo" class="output"></div>
+
+				<br />
+
+				<h3>Binding</h3>
+				<p>Rubberband can also bind events to specific media query changes for more fine grain control:</p>
+
+				<pre class="example"><code class="language-javascript">$.rubberband("bind", "(min-width: 740px)", {
+	enter: function() {
+		...
+	},
+	leave: function() {
+		...
+	}
+});</code></pre>
+
+				<p>Note: The <code>leave</code> callback will only fire after the target media query has been matched at least once. If the media query never matches, neither callback will fire.</p>
+
+				<h5>Demo</h5>
+				<div id="rubberband_demo_binding" class="output"></div>
+
+				<br />
+
+				<!-- IE -->
+				<h2>IE Support</h2>
+				<p>When supporting IE you will need to include a <a href="https://gist.github.com/benplum/8045366" target="_blank">HTML5 enabler</a> and matchMedia polyfill (<a href="https://gist.github.com/benplum/8045336" target="_blank">IE 8</a>, <a href="https://gist.github.com/benplum/8045327" target="_blank">IE 9</a>).</p>
 
 			</div>
 		</article>

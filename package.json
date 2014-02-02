@@ -2,10 +2,11 @@
   "name": "Rubberband",
   "id": "rubberband",
   "codename": "jquery.fs.rubberband",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "A jQuery plugin for responsive media query events. Part of the Formstone Library.",
   "keywords": [
 	"responsive",
+	"mediaquery",
 	"html5",
 	"utility",
 	"javascript",
