@@ -1,5 +1,5 @@
 /* 
- * Rubberband v3.0.3 - 2014-02-02 
+ * Rubberband v3.0.4 - 2014-09-14 
  * A jQuery plugin for responsive media query events. Part of the Formstone Library. 
  * http://formstone.it/rubberband/ 
  * 

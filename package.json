@@ -2,7 +2,7 @@
   "name": "Rubberband",
   "id": "rubberband",
   "codename": "jquery.fs.rubberband",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "description": "A jQuery plugin for responsive media query events. Part of the Formstone Library.",
   "keywords": [
 	"responsive",
@@ -11,12 +11,11 @@
 	"utility",
 	"javascript",
 	"jquery",
-	"formstone",
-	"benplum"
+	"formstone"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/benplum/Rubberband"
+    "url": "https://github.com/Formstone/Rubberband"
   },
   "homepage": "http://formstone.it/rubberband/",
   "demo": "http://formstone.it/components/Rubberband/demo/index.html",

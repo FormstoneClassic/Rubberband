@@ -28,48 +28,60 @@
 
 		<script src="../jquery.fs.rubberband.js"></script>
 
+		<!--[DEMO:START-RESOURCES]-->
+
 		<style>
-			.output { vertical-align: top; }
-			.output span { display: inline-block; width: 90px; }
-			.output p:first-child { font-weight: 600; }
+			.demo .output { vertical-align: top; }
+			.demo .output span { display: inline-block; width: 90px; }
+			.demo .output p:first-child { font-weight: 600; }
 		</style>
 
 		<script>
 			$(document).ready(function() {
-				$(window).on("snap", logSnap);
+				$(window).on("snap.demo", logSnap);
 
-				$.rubberband({
-					minWidth: [ 320, 500, 740, 980, 1220 ],
-					maxWidth: [ 1220, 980, 740, 500, 320 ],
-					minHeight: [ 400, 800 ],
-					maxHeight: [ 800, 400 ]
-				});
+				if ($.rubberband("state") === null) {
+					$.rubberband({
+						minWidth: [ 320, 500, 740, 980, 1220 ],
+						maxWidth: [ 1220, 980, 740, 500, 320 ],
+						minHeight: [ 400, 800 ],
+						maxHeight: [ 800, 400 ]
+					});
+				}
 
 				$.rubberband("bind", "(min-width: 740px)", {
 					enter: logChange,
 					leave: logChange
 				});
 
-				function logSnap(e, data) {
-					var html = "";
-
-					html += "<p><span>Snap:</span><span>MinWidth:</span>" + data.minWidth + "<br />";
-					html += "<span></span><span>MaxWidth:</span>"+ data.maxWidth + "<br />";
-					html += "<span></span><span>MinHeight:</span>"+ data.minHeight + "<br />";
-					html += "<span></span><span>MaxHeight:</span>"+ data.maxHeight + "</p>";
-
-					$("#rubberband_demo").prepend(html);
-				}
-
-				function logChange() {
-					var mql = this,
-						type = mql.matches ? "Enter" : "Leave"
-						html = "<p><span>" + type + ":</span>" + mql.media + "<br />";
-
-					$("#rubberband_demo_binding").prepend(html);
-				}
+				$(window).one("pronto.load", function() {
+					$(window).off("snap.demo");
+					$.rubberband("unbind", "(min-width: 740px)");
+				});
 			});
+
+			function logSnap(e, data) {
+				var html = "";
+
+				html += "<p><span>Snap:</span><span>MinWidth:</span>" + data.minWidth + "<br />";
+				html += "<span></span><span>MaxWidth:</span>"+ data.maxWidth + "<br />";
+				html += "<span></span><span>MinHeight:</span>"+ data.minHeight + "<br />";
+				html += "<span></span><span>MaxHeight:</span>"+ data.maxHeight + "</p>";
+
+				$("#rubberband_demo").prepend(html);
+			}
+
+			function logChange() {
+				var mql = this,
+					type = mql.matches ? "Enter" : "Leave"
+					html = "<p><span>" + type + ":</span>" + mql.media + "<br />";
+
+				$("#rubberband_demo_binding").prepend(html);
+			}
 		</script>
+
+		<!--[DEMO:END-RESOURCES]-->
+
 	</head>
 	<body class="gridlock demo">
 		<header id="header">
@@ -87,6 +99,8 @@
 					<br />
 					<a href="http://formstone.it/rubberband/" class="button">View Documentation</a>
 				</header>
+
+				<!--[DEMO:START-CONTENT]-->
 
 				<!-- Basic -->
 				<h3>Basic</h3>
@@ -132,6 +146,8 @@
 				<!-- IE -->
 				<h2>IE Support</h2>
 				<p>When supporting IE you will need to include a <a href="https://gist.github.com/benplum/8045366" target="_blank">HTML5 enabler</a> and matchMedia polyfill (<a href="https://gist.github.com/benplum/8045336" target="_blank">IE 8</a>, <a href="https://gist.github.com/benplum/8045327" target="_blank">IE 9</a>).</p>
+
+				<!--[DEMO:END-CONTENT]-->
 
 			</div>
 		</article>

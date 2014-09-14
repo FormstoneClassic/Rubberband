@@ -1,6 +1,6 @@
 {
   "name": "rubberband",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "title": "Rubberband",
   "author": {
     "name": "Ben Plum",
@@ -24,12 +24,11 @@
     "utility",
     "javascript",
     "jquery",
-    "formstone",
-    "benplum"
+    "formstone"
   ],
   "docs": "http://formstone.it/rubberband/",
   "demo": "http://formstone.it/rubberband/",
-  "download": "https://github.com/benplum/Rubberband",
-  "bugs": "https://github.com/benplum/Rubberband/issues",
+  "download": "https://github.com/Formstone/Rubberband",
+  "bugs": "https://github.com/Formstone/Rubberband/issues",
   "homepage": "http://formstone.it/rubberband/"
 }
