@@ -7,4 +7,4 @@ A jQuery plugin for responsive media query events. Part of the Formstone Library
 - [Documentation](http://formstone.it/rubberband/) 
 
 #### Bower Support 
-`bower install Rubberband`
+`bower install Rubberband` 

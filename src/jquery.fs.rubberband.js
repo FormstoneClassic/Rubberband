@@ -201,7 +201,7 @@
 		var binding = bindings[mq.media],
 			event = mq.matches ? "enter" : "leave";
 
-		if (binding.active || (!binding.active && mq.matches)) {
+		if (binding && (binding.active || (!binding.active && mq.matches))) {
 			for (var i in binding[event]) {
 				if (binding[event].hasOwnProperty(i)) {
 					binding[event][i].apply(binding.mq);

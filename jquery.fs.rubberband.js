@@ -1,5 +1,5 @@
 /* 
- * Rubberband v3.1.0 - 2014-09-20 
+ * Rubberband v3.1.1 - 2014-11-07 
  * A jQuery plugin for responsive media query events. Part of the Formstone Library. 
  * http://formstone.it/rubberband/ 
  * 
@@ -209,7 +209,7 @@
 		var binding = bindings[mq.media],
 			event = mq.matches ? "enter" : "leave";
 
-		if (binding.active || (!binding.active && mq.matches)) {
+		if (binding && (binding.active || (!binding.active && mq.matches))) {
 			for (var i in binding[event]) {
 				if (binding[event].hasOwnProperty(i)) {
 					binding[event][i].apply(binding.mq);
