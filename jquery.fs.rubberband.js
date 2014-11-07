@@ -18,7 +18,7 @@
 			minHeight: "min-height",
 			maxHeight: "max-height"
 		},
-		bindings = [];
+		bindings = {};
 		//deferred = new $.Deferred();
 
 	/**
@@ -50,24 +50,26 @@
 		 * @example $.rubberband("bind", "(min-width: 500px)", { ... });
 		 */
 		bind: function(media, data) {
-			if (!bindings[media]) {
-				bindings[media] = {
+			var mql = {
 					mq: window.matchMedia(media),
 					active: false,
 					enter: [],
 					leave: []
-				};
+				},
+				key = createKey(mql.mq.media);
 
-				bindings[media].mq.addListener(_onBindingRespond);
+			if (!bindings[ key ]) {
+				bindings[ key ] = mql;
+				bindings[ key ].mq.addListener(_onBindingRespond);
 			}
 
 			for (var i in data) {
-				if (data.hasOwnProperty(i) && bindings[media].hasOwnProperty(i)) {
-					bindings[media][i].push(data[i]);
+				if (data.hasOwnProperty(i) && bindings[ key ].hasOwnProperty(i)) {
+					bindings[ key ][i].push(data[i]);
 				}
 			}
 
-			_onBindingRespond(bindings[media].mq);
+			_onBindingRespond(bindings[ key ].mq);
 
 			return this;
 		},
@@ -108,9 +110,11 @@
 		 * @example $.rubberband("unbind", "(min-width: 500px)", { ... });
 		 */
 		unbind: function(media) {
-			if (bindings[media]) {
-				bindings[media].mq.removeListener(_onBindingRespond);
-				bindings = bindings.splice(bindings.indexOf(bindings[media]), 1);
+			var key = createKey(media);
+
+			if (bindings[ key ]) {
+				bindings[ key ].mq.removeListener(_onBindingRespond);
+				bindings = bindings.splice(bindings.indexOf(bindings[ key ]), 1);
 			}
 
 			return this;
@@ -206,7 +210,8 @@
 	 * @description Handles a binding's media query change
 	 */
 	function _onBindingRespond(mq) {
-		var binding = bindings[mq.media],
+		var key = createKey(mq.media),
+			binding = bindings[ key ],
 			event = mq.matches ? "enter" : "leave";
 
 		if (binding && (binding.active || (!binding.active && mq.matches))) {
@@ -218,6 +223,10 @@
 
 			binding.active = true;
 		}
+	}
+
+	function createKey(string) {
+		return string.replace(/\(/g, '').replace(/\)/g, '').replace(/\:/g, '').replace(/\s+/g, '-');
 	}
 
 	/**
