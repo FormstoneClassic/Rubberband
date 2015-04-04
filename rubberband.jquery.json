@@ -26,9 +26,9 @@
     "jquery",
     "formstone"
   ],
-  "docs": "http://formstone.it/rubberband/",
-  "demo": "http://formstone.it/rubberband/",
-  "download": "https://github.com/Formstone/Rubberband",
-  "bugs": "https://github.com/Formstone/Rubberband/issues",
-  "homepage": "http://formstone.it/rubberband/"
+  "docs": "http://classic.formstone.it/rubberband/",
+  "demo": "http://classic.formstone.it/rubberband/",
+  "download": "https://github.com/FormstoneClassic/Rubberband",
+  "bugs": "https://github.com/FormstoneClassic/Rubberband/issues",
+  "homepage": "http://classic.formstone.it/rubberband/"
 }

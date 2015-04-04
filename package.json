@@ -15,10 +15,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/Formstone/Rubberband"
+    "url": "https://github.com/FormstoneClassic/Rubberband"
   },
-  "homepage": "http://formstone.it/rubberband/",
-  "demo": "http://formstone.it/components/Rubberband/demo/index.html",
+  "homepage": "http://classic.formstone.it/rubberband/",
+  "demo": "http://classic.formstone.it/components/Rubberband/demo/index.html",
   "license": "MIT",
   "author": {
     "name": "Ben Plum",
